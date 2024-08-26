@@ -1,4 +1,4 @@
-package lk.ijse.gdse.aad67.studentmanagemant2024.util;
+package lk.ijse.bootstarpPosBackend.util;
 
 import java.util.UUID;
 

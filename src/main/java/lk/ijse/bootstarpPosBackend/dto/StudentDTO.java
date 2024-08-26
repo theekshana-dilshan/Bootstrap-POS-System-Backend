@@ -1,4 +1,4 @@
-package lk.ijse.gdse.aad67.studentmanagemant2024.dto;
+package lk.ijse.bootstarpPosBackend.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -1,4 +1,4 @@
-package lk.ijse.gdse.aad67.studentmanagemant2024.controllers;
+package lk.ijse.bootstarpPosBackend.controllers;
 
 import jakarta.json.JsonException;
 import jakarta.json.bind.Jsonb;
@@ -8,9 +8,9 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import lk.ijse.gdse.aad67.studentmanagemant2024.dto.StudentDTO;
-import lk.ijse.gdse.aad67.studentmanagemant2024.dao.StudentDataProcess;
-import lk.ijse.gdse.aad67.studentmanagemant2024.util.UtilProcess;
+import lk.ijse.bootstarpPosBackend.dao.StudentDataProcess;
+import lk.ijse.bootstarpPosBackend.dto.StudentDTO;
+import lk.ijse.bootstarpPosBackend.util.UtilProcess;
 
 import javax.naming.InitialContext;
 import javax.naming.NamingException;

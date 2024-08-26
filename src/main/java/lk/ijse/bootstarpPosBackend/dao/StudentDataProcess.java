@@ -1,10 +1,9 @@
-package lk.ijse.gdse.aad67.studentmanagemant2024.dao;
+package lk.ijse.bootstarpPosBackend.dao;
 
-import jakarta.servlet.http.HttpServletResponse;
-import lk.ijse.gdse.aad67.studentmanagemant2024.dto.StudentDTO;
+import lk.ijse.bootstarpPosBackend.dao.StudentData;
+import lk.ijse.bootstarpPosBackend.dto.StudentDTO;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public final class  StudentDataProcess implements StudentData {

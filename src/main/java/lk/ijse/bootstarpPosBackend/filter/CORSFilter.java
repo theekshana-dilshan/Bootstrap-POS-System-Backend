@@ -1,4 +1,4 @@
-package lk.ijse.gdse.aad67.studentmanagemant2024.filter;
+package lk.ijse.bootstarpPosBackend.filter;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
