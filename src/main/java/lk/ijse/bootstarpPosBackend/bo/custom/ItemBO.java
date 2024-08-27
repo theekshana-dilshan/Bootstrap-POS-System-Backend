@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface ItemBO extends SuperBO {
 
-    List<ItemDTO> getAllItem() throws SQLException, ClassNotFoundException;
+    List<ItemDTO> getAllItem(Connection connection) throws SQLException, ClassNotFoundException;
     ItemDTO getItem(String itemId, Connection connection) throws SQLException;
     boolean saveItem(ItemDTO itemDTO,Connection connection) throws SQLException, ClassNotFoundException;
     boolean deleteItem(String itemId,Connection connection) throws SQLException, ClassNotFoundException;

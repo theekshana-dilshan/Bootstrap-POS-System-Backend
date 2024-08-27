@@ -96,7 +96,7 @@ public class CustomerController extends HttpServlet {
             Jsonb jsonb = JsonbBuilder.create();
 
             if (customerId == null) {
-                List<CustomerDTO> customers = customerBoImpl.getAllCustomer();
+                List<CustomerDTO> customers = customerBoImpl.getAllCustomer(connection);
                 jsonb.toJson(customers, writer);
             } else {
                 CustomerDTO customer = customerBoImpl.getCustomer(customerId, connection);

@@ -21,7 +21,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 
-@WebServlet(urlPatterns = "/customer")
+@WebServlet(urlPatterns = "/orders")
 public class OrderController extends HttpServlet {
     Connection connection;
 
@@ -95,7 +95,7 @@ public class OrderController extends HttpServlet {
             resp.setContentType("application/json");
             Jsonb jsonb = JsonbBuilder.create();
             if (orderId == null) {
-                List<OrderDTO> orders = orderBoImpl.getAllOrders();
+                List<OrderDTO> orders = orderBoImpl.getAllOrders(connection);
                 jsonb.toJson(orders, writer);
             } else {
                 var order = orderBoImpl.getOrders(orderId, connection);

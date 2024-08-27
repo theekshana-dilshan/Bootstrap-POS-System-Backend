@@ -18,7 +18,7 @@ public class CustomerBOImpl implements CustomerBO {
     CustomerDAO customerDAO= (CustomerDAO) DAOFactory.getDaoFactory().getDAO(DAOFactory.DAOTypes.CUSTOMER);
 
     @Override
-    public List<CustomerDTO> getAllCustomer() throws SQLException, ClassNotFoundException {
+    public List<CustomerDTO> getAllCustomer(Connection connection) throws SQLException, ClassNotFoundException {
         ArrayList<CustomerDTO> customerDTOS=new ArrayList<>();
         ArrayList<Customer>customers=customerDAO.getAll(connection);
         for (Customer customer:customers) {

@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface OrderBO extends SuperBO {
 
-    List<OrderDTO> getAllOrders() throws SQLException, ClassNotFoundException;
+    List<OrderDTO> getAllOrders(Connection connection) throws SQLException, ClassNotFoundException;
     OrderDTO getOrders(String orderId, Connection connection) throws SQLException;
     boolean saveOrder(OrderDTO orderDTO,Connection connection) throws SQLException, ClassNotFoundException;
     boolean deleteOrder(String orderId,Connection connection) throws SQLException, ClassNotFoundException;

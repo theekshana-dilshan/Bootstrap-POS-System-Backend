@@ -20,7 +20,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 
-@WebServlet(urlPatterns = "/customer")
+@WebServlet(urlPatterns = "/item")
 public class ItemController extends HttpServlet {
     Connection connection;
 
@@ -94,7 +94,7 @@ public class ItemController extends HttpServlet {
             resp.setContentType("application/json");
             Jsonb jsonb = JsonbBuilder.create();
             if (itemId == null) {
-                List<ItemDTO> items = itemBoImpl.getAllItem();
+                List<ItemDTO> items = itemBoImpl.getAllItem(connection);
                 jsonb.toJson(items, writer);
             } else {
                 var item = itemBoImpl.getItem(itemId, connection);

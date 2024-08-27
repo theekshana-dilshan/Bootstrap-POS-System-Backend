@@ -21,7 +21,7 @@ public class ItemBOImpl implements ItemBO {
     ItemDAO itemDAO= (ItemDAO) DAOFactory.getDaoFactory().getDAO(DAOFactory.DAOTypes.ITEM);
 
     @Override
-    public List<ItemDTO> getAllItem() throws SQLException, ClassNotFoundException {
+    public List<ItemDTO> getAllItem(Connection connection) throws SQLException, ClassNotFoundException {
         ArrayList<ItemDTO> itemDTOS=new ArrayList<>();
         ArrayList<Item>items=itemDAO.getAll(connection);
         for (Item item:items) {

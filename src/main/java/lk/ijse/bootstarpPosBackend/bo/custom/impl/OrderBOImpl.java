@@ -21,7 +21,7 @@ public class OrderBOImpl implements OrderBO {
     Connection connection;
     OrderDAO orderDAO= (OrderDAO) DAOFactory.getDaoFactory().getDAO(DAOFactory.DAOTypes.ORDER);
     @Override
-    public List<OrderDTO> getAllOrders() throws SQLException, ClassNotFoundException {
+    public List<OrderDTO> getAllOrders(Connection connection) throws SQLException, ClassNotFoundException {
         ArrayList<OrderDTO> orderDTOS=new ArrayList<>();
         ArrayList<Order>orders=orderDAO.getAll(connection);
         for (Order order:orders) {
