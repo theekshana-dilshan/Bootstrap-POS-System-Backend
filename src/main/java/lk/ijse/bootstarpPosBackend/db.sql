@@ -1,6 +1,6 @@
-CREATE DATABASE IF NOT EXISTS boostrapPosBackend;
+CREATE DATABASE IF NOT EXISTS boostrapposbackend;
 
-USE boostrapPosBackend;
+USE boostrapposbackend;
 
 create table customer(
                         customerId VARCHAR(50) primary key,

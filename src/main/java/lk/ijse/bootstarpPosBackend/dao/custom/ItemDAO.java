@@ -9,5 +9,5 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 public interface ItemDAO extends CrudDAO<Item> {
-    ItemDTO getItem(String itemId, Connection connection) throws SQLException;
+    Item getItem(String itemId, Connection connection) throws SQLException;
 }

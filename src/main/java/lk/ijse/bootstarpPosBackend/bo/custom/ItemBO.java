@@ -1,14 +1,18 @@
 package lk.ijse.bootstarpPosBackend.bo.custom;
 
 import lk.ijse.bootstarpPosBackend.bo.SuperBO;
+import lk.ijse.bootstarpPosBackend.dto.CustomerDTO;
 import lk.ijse.bootstarpPosBackend.dto.ItemDTO;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.List;
 
 public interface ItemBO extends SuperBO {
+
+    List<ItemDTO> getAllItem() throws SQLException, ClassNotFoundException;
     ItemDTO getItem(String itemId, Connection connection) throws SQLException;
-    boolean saveItem(ItemDTO itemDTO,Connection connection);
-    boolean deleteItem(String itemId,Connection connection);
-    boolean updateItem(String itemId,ItemDTO updatedItem,Connection connection);
+    boolean saveItem(ItemDTO itemDTO,Connection connection) throws SQLException, ClassNotFoundException;
+    boolean deleteItem(String itemId,Connection connection) throws SQLException, ClassNotFoundException;
+    boolean updateItem(String itemId,ItemDTO updatedItem,Connection connection) throws SQLException, ClassNotFoundException;
 }

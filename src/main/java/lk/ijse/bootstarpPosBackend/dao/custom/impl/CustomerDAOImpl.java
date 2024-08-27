@@ -18,22 +18,22 @@ public final class CustomerDAOImpl implements CustomerDAO {
     static String DELETE_CUSTOMER = "DELETE FROM customer WHERE customerId=?";
 
     @Override
-    public CustomerDTO getCustomer(String customerId, Connection connection) throws SQLException {
-        var customerDTO = new CustomerDTO();
+    public Customer getCustomer(String customerId, Connection connection) throws SQLException {
+        var customer = new Customer();
         try {
             var ps = connection.prepareStatement(GET_CUSTOMER);
             ps.setString(1, customerId);
             var resultSet = ps.executeQuery();
             while (resultSet.next()) {
-                customerDTO.setCustomerId(resultSet.getString("customerId"));
-                customerDTO.setCustomerName(resultSet.getString("customerName"));
-                customerDTO.setCustomerAddress(resultSet.getString("customerAddress"));
-                customerDTO.setCustomerSalary(resultSet.getString("customerSalary"));
+                customer.setCustomerId(resultSet.getString("customerId"));
+                customer.setCustomerName(resultSet.getString("customerName"));
+                customer.setCustomerAddress(resultSet.getString("customerAddress"));
+                customer.setCustomerSalary(resultSet.getString("customerSalary"));
             }
         }catch (SQLException e) {
             e.printStackTrace();
         }
-        return customerDTO;
+        return customer;
     }
 
     @Override

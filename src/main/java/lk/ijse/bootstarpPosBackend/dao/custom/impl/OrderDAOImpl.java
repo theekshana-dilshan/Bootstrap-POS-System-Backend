@@ -73,22 +73,22 @@ public class OrderDAOImpl implements OrderDAO {
     }
 
     @Override
-    public OrderDTO getOrders(String orderId, Connection connection) throws SQLException {
-        var orderDTO = new OrderDTO();
+    public Order getOrders(String orderId, Connection connection) throws SQLException {
+        var order = new Order();
         try {
             var ps = connection.prepareStatement(GET_ORDER);
             ps.setString(1, orderId);
             var resultSet = ps.executeQuery();
             while (resultSet.next()) {
-                orderDTO.setOrderId(resultSet.getString("customerId"));
-                orderDTO.setOrderDate(resultSet.getString("customerName"));
-                orderDTO.setOrderCustomer(resultSet.getString("customerAddress"));
-                orderDTO.setDiscount(resultSet.getString("customerSalary"));
-                orderDTO.setSubTotal(resultSet.getString("customerSalary"));
+                order.setOrderId(resultSet.getString("customerId"));
+                order.setOrderDate(resultSet.getString("customerName"));
+                order.setOrderCustomer(resultSet.getString("customerAddress"));
+                order.setDiscount(resultSet.getString("customerSalary"));
+                order.setSubTotal(resultSet.getString("customerSalary"));
             }
         }catch (SQLException e) {
             e.printStackTrace();
         }
-        return orderDTO;
+        return order;
     }
 }

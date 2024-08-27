@@ -9,5 +9,5 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 public interface CustomerDAO extends CrudDAO<Customer> {
-    CustomerDTO getCustomer(String customerId, Connection connection) throws SQLException;
+    Customer getCustomer(String customerId, Connection connection) throws SQLException;
 }

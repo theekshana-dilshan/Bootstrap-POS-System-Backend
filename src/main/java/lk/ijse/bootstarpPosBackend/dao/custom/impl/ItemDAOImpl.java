@@ -18,22 +18,22 @@ public final class ItemDAOImpl implements ItemDAO {
     static String DELETE_ITEM = "DELETE FROM item WHERE itemCode=?";
 
     @Override
-    public ItemDTO getItem(String itemId, Connection connection) throws SQLException {
-        var itemDTO = new ItemDTO();
+    public Item getItem(String itemId, Connection connection) throws SQLException {
+        var item = new Item();
         try {
             var ps = connection.prepareStatement(GET_ITEM);
             ps.setString(1, itemId);
             var resultSet = ps.executeQuery();
             while (resultSet.next()) {
-                itemDTO.setItemCode(resultSet.getString("itemCode"));
-                itemDTO.setItemName(resultSet.getString("itemName"));
-                itemDTO.setQtyOnHand(resultSet.getString("qtyOnHand"));
-                itemDTO.setItemPrice(resultSet.getString("itemPrice"));
+                item.setItemCode(resultSet.getString("itemCode"));
+                item.setItemName(resultSet.getString("itemName"));
+                item.setQtyOnHand(resultSet.getString("qtyOnHand"));
+                item.setItemPrice(resultSet.getString("itemPrice"));
             }
         }catch (SQLException e) {
             e.printStackTrace();
         }
-        return itemDTO;
+        return item;
     }
 
     @Override

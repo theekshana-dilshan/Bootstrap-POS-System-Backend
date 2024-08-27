@@ -8,5 +8,5 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 public interface OrderDAO extends CrudDAO<Order> {
-    OrderDTO getOrders(String orderId, Connection connection) throws SQLException;
+    Order getOrders(String orderId, Connection connection) throws SQLException;
 }
