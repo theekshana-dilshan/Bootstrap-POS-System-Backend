@@ -15,4 +15,6 @@ public interface ItemBO extends SuperBO {
     boolean saveItem(ItemDTO itemDTO,Connection connection) throws SQLException, ClassNotFoundException;
     boolean deleteItem(String itemId,Connection connection) throws SQLException, ClassNotFoundException;
     boolean updateItem(String itemId,ItemDTO updatedItem,Connection connection) throws SQLException, ClassNotFoundException;
+    String getLastItemId(Connection connection) throws SQLException;
+    ItemDTO getItemByName(String itemName, Connection connection) throws SQLException, ClassNotFoundException;
 }

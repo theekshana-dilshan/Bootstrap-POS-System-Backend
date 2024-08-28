@@ -12,6 +12,8 @@ import lk.ijse.bootstarpPosBackend.entity.Item;
 import lk.ijse.bootstarpPosBackend.entity.Order;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -50,5 +52,20 @@ public class OrderBOImpl implements OrderBO {
     @Override
     public boolean updateOrder(String orderId, OrderDTO updatedOrder, Connection connection) throws SQLException, ClassNotFoundException {
         return orderDAO.update(new Order(updatedOrder.getOrderId(),updatedOrder.getOrderDate(),updatedOrder.getOrderCustomer(),updatedOrder.getDiscount(),updatedOrder.getSubTotal()), connection);
+    }
+
+    @Override
+    public String getLastOrderId(Connection connection) throws SQLException {
+        String lastId = null;
+        String sql = "SELECT orderId FROM orders ORDER BY orderId DESC LIMIT 1";
+
+        try (PreparedStatement pst = connection.prepareStatement(sql);
+             ResultSet resultSet = pst.executeQuery()) {
+
+            if (resultSet.next()) {
+                lastId = resultSet.getString("orderId");
+            }
+        }
+        return lastId;
     }
 }

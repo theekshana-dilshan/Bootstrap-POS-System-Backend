@@ -90,17 +90,37 @@ public class OrderController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         var orderId = req.getParameter("orderId");
+        String action = req.getParameter("action");
         var orderBoImpl = new OrderBOImpl();
+
         try (var writer = resp.getWriter()){
             resp.setContentType("application/json");
             Jsonb jsonb = JsonbBuilder.create();
-            if (orderId == null) {
-                List<OrderDTO> orders = orderBoImpl.getAllOrders(connection);
-                jsonb.toJson(orders, writer);
+
+            if ("generateId".equals(action)) {
+                OrderBOImpl orderBO = new OrderBOImpl();
+                String lastId = orderBO.getLastOrderId(connection);
+
+                String newId;
+                if (lastId == null) {
+                    newId = "O00-001";
+                } else {
+                    String[] parts = lastId.split("-");
+                    int lastNumber = Integer.parseInt(parts[1]);
+                    newId = String.format("O00-%03d", lastNumber + 1);
+                }
+
+                resp.setContentType("application/json");
+                resp.getWriter().write("{\"orderId\":\"" + newId + "\"}");
             } else {
-                var order = orderBoImpl.getOrders(orderId, connection);
-                System.out.println(order);
-                jsonb.toJson(order, writer);
+                if (orderId == null) {
+                    List<OrderDTO> orders = orderBoImpl.getAllOrders(connection);
+                    jsonb.toJson(orders, writer);
+                } else {
+                    var order = orderBoImpl.getOrders(orderId, connection);
+                    System.out.println(order);
+                    jsonb.toJson(order, writer);
+                }
             }
         } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);

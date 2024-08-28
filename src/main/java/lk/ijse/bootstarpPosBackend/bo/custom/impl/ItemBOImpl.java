@@ -10,6 +10,8 @@ import lk.ijse.bootstarpPosBackend.entity.Customer;
 import lk.ijse.bootstarpPosBackend.entity.Item;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -50,5 +52,43 @@ public class ItemBOImpl implements ItemBO {
     @Override
     public boolean updateItem(String itemId, ItemDTO updatedItem, Connection connection) throws SQLException, ClassNotFoundException {
         return itemDAO.update(new Item(updatedItem.getItemCode(),updatedItem.getItemName(),updatedItem.getQtyOnHand(),updatedItem.getItemPrice()), connection);
+    }
+
+    @Override
+    public String getLastItemId(Connection connection) throws SQLException {
+        String lastId = null;
+        String sql = "SELECT itemCode FROM item ORDER BY itemCode DESC LIMIT 1";
+
+        try (PreparedStatement pst = connection.prepareStatement(sql);
+             ResultSet resultSet = pst.executeQuery()) {
+
+            if (resultSet.next()) {
+                lastId = resultSet.getString("itemCode");
+            }
+        }
+
+        return lastId;
+    }
+
+    @Override
+    public ItemDTO getItemByName(String itemName, Connection connection) throws SQLException, ClassNotFoundException {
+        String sql = "SELECT * FROM item WHERE itemName = ?";
+        ItemDTO item = null;
+
+        try (PreparedStatement pst = connection.prepareStatement(sql)) {
+            pst.setString(1, itemName);
+            try (ResultSet resultSet = pst.executeQuery()) {
+                if (resultSet.next()) {
+                    item = new ItemDTO(
+                            resultSet.getString("itemCode"),
+                            resultSet.getString("itemName"),
+                            resultSet.getString("qtyOnHand"),
+                            resultSet.getString("itemPrice")
+                    );
+                }
+            }
+        }
+
+        return item;
     }
 }

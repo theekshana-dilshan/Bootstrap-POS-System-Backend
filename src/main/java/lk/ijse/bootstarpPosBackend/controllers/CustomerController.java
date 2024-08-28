@@ -89,18 +89,41 @@ public class CustomerController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String customerId = req.getParameter("customerId");
+        String action = req.getParameter("action");
+        String customerName = req.getParameter("customerName");
         var customerBoImpl = new CustomerBOImpl();
 
         try (var writer = resp.getWriter()) {
             resp.setContentType("application/json");
             Jsonb jsonb = JsonbBuilder.create();
 
-            if (customerId == null) {
-                List<CustomerDTO> customers = customerBoImpl.getAllCustomer(connection);
-                jsonb.toJson(customers, writer);
+            if ("generateId".equals(action)) {
+                // Assuming getLastCustomerId is a method in CustomerBOImpl that returns the last customer ID
+                CustomerBOImpl customerBO = new CustomerBOImpl();
+                String lastId = customerBO.getLastCustomerId(connection); // Retrieve the last ID from the database
+
+                String newId;
+                if (lastId == null) {
+                    newId = "C00-001";
+                } else {
+                    String[] parts = lastId.split("-");
+                    int lastNumber = Integer.parseInt(parts[1]);
+                    newId = String.format("C00-%03d", lastNumber + 1);
+                }
+
+                resp.setContentType("application/json");
+                resp.getWriter().write("{\"customerId\":\"" + newId + "\"}");
             } else {
-                CustomerDTO customer = customerBoImpl.getCustomer(customerId, connection);
-                jsonb.toJson(customer, writer);
+                if (customerId == null) {
+                    List<CustomerDTO> customers = customerBoImpl.getAllCustomer(connection);
+                    jsonb.toJson(customers, writer);
+                } else if (customerName != null) {
+                    CustomerDTO customer = customerBoImpl.getCustomerByName(customerName, connection);
+                    jsonb.toJson(customer, writer);
+                } else {
+                    CustomerDTO customer = customerBoImpl.getCustomer(customerId, connection);
+                    jsonb.toJson(customer, writer);
+                }
             }
         } catch (SQLException | ClassNotFoundException e) {
             resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);

@@ -14,13 +14,21 @@ public class CORSFilter extends HttpFilter {
     protected void doFilter(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
         String origin = request.getHeader("Origin");
 
-        // Check if origin is not null before calling contains
-        if (origin != null && origin.contains("allowed-origin.com")) {
-            // Set CORS headers
+        // Allow requests from any origin
+        if (origin != null) {
             response.setHeader("Access-Control-Allow-Origin", origin);
-            response.setHeader("Access-Control-Allow-Methods", "GET, POST, PATCH, DELETE, OPTIONS");
-            response.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
-            response.setHeader("Access-Control-Allow-Credentials", "true");
+        } else {
+            response.setHeader("Access-Control-Allow-Origin", "*");  // Allow all origins
+        }
+
+        response.setHeader("Access-Control-Allow-Methods", "GET, POST, PATCH, DELETE, OPTIONS");
+        response.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+        response.setHeader("Access-Control-Allow-Credentials", "true");
+
+        // Handle preflight requests
+        if ("OPTIONS".equalsIgnoreCase(request.getMethod())) {
+            response.setStatus(HttpServletResponse.SC_OK);
+            return;
         }
 
         // Pass the request along the filter chain

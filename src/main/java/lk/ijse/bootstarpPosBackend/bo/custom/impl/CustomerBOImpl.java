@@ -7,6 +7,8 @@ import lk.ijse.bootstarpPosBackend.dto.CustomerDTO;
 import lk.ijse.bootstarpPosBackend.entity.Customer;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -47,5 +49,43 @@ public class CustomerBOImpl implements CustomerBO {
     @Override
     public boolean updateCustomer(String customerId, CustomerDTO updatedCustomer, Connection connection) throws SQLException, ClassNotFoundException {
         return customerDAO.update(new Customer(updatedCustomer.getCustomerId(),updatedCustomer.getCustomerName(),updatedCustomer.getCustomerAddress(),updatedCustomer.getCustomerSalary()), connection);
+    }
+
+    @Override
+    public String getLastCustomerId(Connection connection) throws SQLException {
+        String lastId = null;
+        String sql = "SELECT customerId FROM customer ORDER BY customerId DESC LIMIT 1";
+
+        try (PreparedStatement pst = connection.prepareStatement(sql);
+             ResultSet resultSet = pst.executeQuery()) {
+
+            if (resultSet.next()) {
+                lastId = resultSet.getString("customerId");
+            }
+        }
+
+        return lastId;
+    }
+
+    @Override
+    public CustomerDTO getCustomerByName(String customerName, Connection connection) throws SQLException, ClassNotFoundException {
+        String sql = "SELECT * FROM Customer WHERE customerName = ?";
+        CustomerDTO customer = null;
+
+        try (PreparedStatement pst = connection.prepareStatement(sql)) {
+            pst.setString(1, customerName);
+            try (ResultSet resultSet = pst.executeQuery()) {
+                if (resultSet.next()) {
+                    customer = new CustomerDTO(
+                            resultSet.getString("customerId"),
+                            resultSet.getString("customerName"),
+                            resultSet.getString("customerAddress"),
+                            resultSet.getString("customerSalary")
+                    );
+                }
+            }
+        }
+
+        return customer;
     }
 }
